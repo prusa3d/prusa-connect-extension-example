@@ -1,0 +1,35 @@
+{
+  "name": "hello-client",
+  "version": "0.1.0",
+  "description": "A typed client for the routes of module com.github.aux.prusa3d.prusa-connect-extension-example, generated from its OpenAPI fragment. It binds onto a @prusa/connect client.",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "generate:types": "openapi-typescript openapi.json -o src/generated/module-api.ts"
+  },
+  "peerDependencies": {
+    "@prusa/connect": "0.0.1"
+  },
+  "devDependencies": {
+    "openapi-typescript": "7.13.0",
+    "typescript": "6.0.3",
+    "@prusa/connect": "0.0.1"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "pnpm@11.3.0",
+  "private": true
+}

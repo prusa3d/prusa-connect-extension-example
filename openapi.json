@@ -1,0 +1,34 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "hello",
+    "version": "1.0.0",
+    "description": "The routes hello serves. Every path is relative to the mount the host assigns, and the host serves this document rebased under it at <mount>/openapi.json."
+  },
+  "paths": {
+    "/hello": {
+      "get": {
+        "operationId": "read-hello",
+        "summary": "What this module holds",
+        "description": "What the module holds, and the principal the host authorized, which is the host's answer and never a header the caller set. The host takes view_resource on the module's instance before this is called.",
+        "responses": {
+          "200": {
+            "description": "The module's answer.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {"type": "string", "description": "One line the page shows."},
+                    "principal": {"type": "string", "description": "Who the host says is calling."}
+                  },
+                  "required": ["message", "principal"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

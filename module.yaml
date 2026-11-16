@@ -1,0 +1,101 @@
+# The one manifest for both halves of hello: the Go process in main.go and
+# the browser bundle under ui/.
+#
+# `prusa-connect module add` reads it out of the release, writes one
+# declaration, and copies it into the bundle directory it installs, because
+# that is where the host reads the ui block from. The digest covers it there,
+# so the manifest the host reads is the one the install recorded.
+#
+# The namespace is absent on purpose. The host derives it from the repository
+# address the operator installed, so no module can name another module's
+# address. For this module that is com.github.aux.prusa3d.prusa-connect-extension-example.
+
+name: hello
+# The kind the one instance is declared under. It offers the service runtime,
+# which is what a module with a process needs. The browser half is declared
+# beside it, as `service.assets`.
+kind: sink
+version: 1.0.0
+# The licence this module is released under, required. Free text of at most
+# 200 characters; an SPDX identifier is the usual form. Operators read it on
+# the marketplace before they install. Change it to yours.
+license: MIT
+# What a marketplace card prints beside the name: the title a person reads,
+# one sentence about this module, and who answers for it. The install copies
+# them into the declaration, so `GET /api/v1/resources` carries them for an
+# installed module. Write your own sentence here, a title if the name alone reads badly, and your name or
+# your team's beside it.
+# title: Your module's name
+summary: One sentence saying what hello does.
+# codeowner: your-name
+# The module wire major the process half speaks.
+contract_major: 1
+# Where the fragment describing the routes is, inside this repository.
+openapi: openapi.json
+# The platforms the release ships a binary for, each a GOOS_GOARCH pair. Drop
+# the ones you do not build, and add the ones you do.
+platforms:
+  - linux_amd64
+  - linux_arm64
+  - darwin_arm64
+  - windows_amd64
+
+# The Prusa Connect versions this release runs on. 0.1.0-beta.1 is the first
+# that reads `license`; an older core refuses this manifest, so the marketplace
+# does not offer the release to it.
+require:
+  core: ">=0.1.0-beta.1"
+
+# Every setting this module reads, each with its type, its default and one
+# sentence saying what it controls. The host applies every default, writes the
+# `config:` block of the instance over it key by key, and sends the result on
+# plugin.configure before the first request arrives. A key not named here is
+# refused before the process starts, and nothing in main.go reads an
+# environment variable, so this list is where an operator finds every knob.
+#
+# An operator who wants another line writes:
+#
+#   resources:
+#     sink:
+#       hello:
+#         config:
+#           message: Ready.
+options:
+  - key: message
+    type: string
+    default: "Hello is serving."
+    summary: The line GET /hello answers with.
+
+# The memory in MiB the server may budget for the process, children included.
+# needs:
+#   memory_mib: 256
+
+# The actions this module may take as itself are a request rather than a grant.
+# Add them here and the operator reads them before `module add -approve` writes
+# them into the declaration and grants this module what they name. There is no
+# entry below, because this module acts
+# only for the person the host authorized and does nothing of its own: no poll,
+# no sync loop, no background work. Write one line per permission saying what it
+# lets this module do.
+#
+# permissions:
+#   # read the fleet and the event stream, so the page can list devices
+#   - observe
+# events:
+#   changed: hello.changed
+
+ui:
+  # The built bundle's entry, relative to the bundle root. The host serves it
+  # at /api/v1/modules/com.github.aux.prusa3d.prusa-connect-extension-example/ui/ui/index.js.
+  entry: ui/index.js
+  # The range of @prusa/connect-ui this bundle was built against. The app
+  # refuses a bundle its own version falls outside of.
+  library: ">=0.0.1 <1.0.0"
+  contributes:
+    # The whole of what this bundle may register. A registration the block
+    # does not declare is refused at run time and the app drops this module.
+    # Every entry here has one `host.register` call behind it in
+    # ui/src/index.ts, and the generator wrote the pair from one answer.
+    pages:
+      - path: hello
+        title: Hello
