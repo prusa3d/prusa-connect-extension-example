@@ -14,8 +14,7 @@ jobs:
       path: .
       bundle-command: make ui-build
       core-ref: main # Prusa Connect into .core/, until the SDK is published
-    # The environment `release` holds PRUSA_CONNECT_EXTENSION_SIGNING_KEY, and
-    # PRUSA_CONNECT_DEPLOY_KEY reads Prusa Connect while it is private.
+    # The environment `release` holds PRUSA_CONNECT_EXTENSION_SIGNING_KEY.
     secrets: inherit
     permissions:
       contents: read

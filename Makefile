@@ -27,9 +27,8 @@ export CI ?= true
 
 .PHONY: core client client-check check go-check ui-check ui-build release install clean
 
-# The checkout is cloned once. CI checks it out itself (it needs a key while
-# the repository is private) and only the build below runs. To move to another
-# CORE_REF locally, `rm -rf .core` first.
+# The checkout is cloned once. To move to another CORE_REF, `rm -rf .core`
+# first.
 $(CORE)/.git:
 	git -c advice.detachedHead=false clone --quiet --depth 1 --branch $(CORE_REF) $(CORE_REPO) $(CORE)
 

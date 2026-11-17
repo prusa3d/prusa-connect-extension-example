@@ -107,10 +107,6 @@ One-time setup, in this repository and in the marketplace's author console:
 | `PRUSA_CONNECT_EXTENSION_SIGNING_KEY`: the RSA private key whose public half is registered | secret of that environment |
 | a trusted publisher: the extension id, `owner/repository`, `release.yml` and the environment | marketplace author console → Trusted publishing |
 
-While Prusa Connect is private, the builder and CI read it with a read-only deploy key of
-`prusa3d/prusa-connect`, stored as the repository secret `PRUSA_CONNECT_DEPLOY_KEY`. Drop both
-once it is public.
-
 The marketplace's documentation walks through each step:
 [publishing an extension from GitHub Actions](https://plugin-marketplace.prusa3d.com/docs/connect/github-actions).
 

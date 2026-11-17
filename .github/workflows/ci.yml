@@ -24,21 +24,6 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-      # Temporary, while prusa3d/prusa-connect is private: check the core out
-      # with a read-only deploy key into .core/, where the Makefile looks for it
-      # (it clones only when .core/ is missing). Delete this step once the
-      # repository is public.
-      - name: Check out Prusa Connect (private for now)
-        env:
-          DEPLOY_KEY: ${{ secrets.PRUSA_CONNECT_DEPLOY_KEY }}
-        run: |
-          set -euo pipefail
-          ref="$(sed -n 's/^CORE_REF ?= //p' Makefile)"
-          install -m 600 /dev/null "$RUNNER_TEMP/deploy_key"
-          printf '%s\n' "$DEPLOY_KEY" >"$RUNNER_TEMP/deploy_key"
-          GIT_SSH_COMMAND="ssh -i $RUNNER_TEMP/deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" \
-            git -c advice.detachedHead=false clone --quiet --depth 1 --branch "$ref" git@github.com:prusa3d/prusa-connect.git .core
-          rm -f "$RUNNER_TEMP/deploy_key"
       - run: make check
       - run: make release
       - name: Throwaway signing key
