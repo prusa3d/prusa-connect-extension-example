@@ -14,8 +14,11 @@ jobs:
       path: .
       bundle-command: make ui-build
       core-ref: v0.1.0-beta.1 # Prusa Connect into .core/, until the SDK is published
-    # The environment `release` holds PRUSA_CONNECT_EXTENSION_SIGNING_KEY.
-    secrets: inherit
+    # The environment `release` holds PRUSA_CONNECT_EXTENSION_SIGNING_KEY. Pass it
+    # by name: `secrets: inherit` does not reach the builder, which lives in
+    # another organisation (prusa3d).
+    secrets:
+      PRUSA_CONNECT_EXTENSION_SIGNING_KEY: ${{ secrets.PRUSA_CONNECT_EXTENSION_SIGNING_KEY }}
     permissions:
       contents: read
       id-token: write     # lets the run prove which repository, workflow and builder it is
