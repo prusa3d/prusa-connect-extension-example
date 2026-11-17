@@ -13,7 +13,7 @@ jobs:
     with:
       path: .
       bundle-command: make ui-build
-      core-ref: main # Prusa Connect into .core/, until the SDK is published
+      core-ref: v0.1.0-beta.1 # Prusa Connect into .core/, until the SDK is published
     # The environment `release` holds PRUSA_CONNECT_EXTENSION_SIGNING_KEY.
     secrets: inherit
     permissions:

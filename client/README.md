@@ -55,6 +55,6 @@ pnpm run generate:types && pnpm run build
 `generate-client-sdk -module -check` with the same flags fails when the
 committed files differ from what the fragment generates.
 
-The peer range on `@prusa/connect` is `0.0.1`, the version of the core this
+The peer range on `@prusa/connect` is `0.1.0`, the version of the core this
 package was generated against. The core package's version is the server's,
 so a consumer installs the one its server runs.

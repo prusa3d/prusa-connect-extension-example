@@ -11,7 +11,7 @@
 # to build against a newer core, and raise `require.core` in module.yaml with it.
 
 CORE_REPO ?= https://github.com/prusa3d/prusa-connect.git
-CORE_REF ?= main
+CORE_REF ?= v0.1.0-beta.1
 CORE := .core
 
 NAME := $(shell sed -n 's/^name:[[:space:]]*//p' module.yaml | head -1)
